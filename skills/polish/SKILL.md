@@ -1,46 +1,21 @@
 ---
 name: polish
-description: Aplica as regras pessoais do David no código alterado. Use SOMENTE quando o usuário invocar explicitamente com "/polish", "roda o polish", "passa o polish", "aplica o polish", "polir o código" ou variações que mencionem "polish". NÃO invocar automaticamente em outras tarefas de código.
+description: Aplica regras de polimento do `./skills-config/polish-config` no código alterado. As regras não ficam na skill — cada projeto define as suas. Use SOMENTE quando o usuário invocar explicitamente com "/polish", "roda o polish", "passa o polish", "aplica o polish", "polir o código" ou variações que mencionem "polish". NÃO invocar automaticamente.
 ---
 
 # Polish
 
-## Regras
+## Fluxo
 
-### 1. Remover comentários inline explicativos
+1. Ler `./skills-config/polish-config`. Se não existe, abortar pedindo pra criar.
+2. Aplicar todas as regras nos arquivos editados nesta sessão.
+3. Reportar resultado.
 
-Remova comentários inline que explicam o que o código faz. Eles não são necessários.
+## Convenção do `polish-config`
 
-### 2. Aumentar a legibilidade do código
+Markdown livre — cada regra é uma seção (`## <Nome da regra>`). O agente lê e aplica usando juízo.
 
-### 3. Linha em branco antes de blocos na mesma indentação
+## Guard-rails
 
-Blocos (`if`, `unless`, `case`, `while`, `until`, `for`, `begin`, `def`, `class`, `module`, `do` multi-linha, e equivalentes em outras linguagens) precisam de uma linha em branco acima quando a linha imediatamente anterior está na **mesma indentação**.
-
-Podem ficar colados apenas quando a linha anterior está em indentação **menor** (mais externa).
-
-Exemplo de violação:
-```ruby
-x = 1
-if y
-  ...
-end
-```
-
-Corrigido:
-```ruby
-x = 1
-
-if y
-  ...
-end
-```
-
-OK (indentação anterior é menor):
-```ruby
-def foo
-  if y
-    ...
-  end
-end
-```
+- Só toca código alterado nesta sessão.
+- Linter do projeto cuida da própria formatação — não duplicar.

@@ -1,12 +1,12 @@
 ---
 name: grill-map
-description: Interview the user relentlessly about a plan or design until reaching shared understanding. When the design tree branches into multiple paths (e.g., business vs technical, feature A vs feature B), list the available branches and ask which one to walk first instead of choosing autonomously. Use when user wants to stress-test a plan, get grilled on their design, or mentions "grill me", "grill map", "grill-map", or variations.
+description: Entrevista o usuário implacavelmente sobre um plano ou design até chegar a um entendimento compartilhado. Quando a árvore de design ramifica em múltiplos caminhos (ex: negócio vs técnico, feature A vs feature B), lista as ramificações disponíveis e pergunta qual percorrer primeiro em vez de escolher sozinho. Use quando o usuário quiser estressar um plano, ser sabatinado sobre seu design, ou mencionar "grill me", "grill map", "grill-map", "me sabatina", "estressar o plano", ou variações.
 ---
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+Me entreviste implacavelmente sobre cada aspecto desse plano até chegarmos a um entendimento compartilhado. Percorra cada ramo da árvore de design, resolvendo dependências entre decisões uma a uma. Pra cada pergunta, ofereça a resposta que você recomenda.
 
-Ask the questions one at a time.
+Faça as perguntas uma de cada vez.
 
-**When the design tree branches into multiple paths** (e.g., business concerns vs technical concerns, frontend vs backend, feature A vs feature B), **stop and ask the user which branch to walk first.** Show the available branches as a short list. Do not pick a branch yourself — wait for the user's direction before drilling in.
+**Quando a árvore de design ramifica em múltiplos caminhos** (ex: preocupações de negócio vs preocupações técnicas, frontend vs backend, feature A vs feature B), **pare e pergunte ao usuário qual ramo percorrer primeiro.** Mostre os ramos disponíveis como lista curta. Não escolha por conta própria — espere a direção do usuário antes de aprofundar.
 
-If a question can be answered by exploring the codebase, explore the codebase instead.
+Se uma pergunta pode ser respondida explorando o codebase, explore o codebase em vez de perguntar.

@@ -1,6 +1,6 @@
 ---
 name: peel-talk
-description: Modo de explicação em camadas. Aplica SOMENTE na resposta imediatamente após a invocação — depois volta ao normal automaticamente. A resposta deve ser em manchete (1 frase, no máximo 2), no nível exato da granularidade da pergunta. Não listar itens individuais quando a pergunta foi sobre o conjunto. Não oferecer drill-down nem perguntar se quer detalhar — esperar o usuário pedir. Use SOMENTE quando o usuário invocar explicitamente com "/peel-talk", "peel-talk", "explica no peel-talk", "peel talk", "modo peel", ou variações. NÃO invocar automaticamente em outras tarefas.
+description: Modo de explicação em camadas — a resposta é uma manchete no nível exato da pergunta, sem drill-down. Aplica SOMENTE na resposta imediatamente após a invocação; depois volta ao normal automaticamente. Use SOMENTE quando o usuário invocar explicitamente com "/peel-talk", "peel-talk", "explica no peel-talk", "peel talk", "modo peel", ou variações. NÃO invocar automaticamente em outras tarefas.
 ---
 
 # peel-talk
@@ -9,7 +9,7 @@ Modo de explicação em camadas. **Ativo somente na resposta seguinte à invoca�
 
 ## Como responder
 
-- **Uma frase.** No máximo duas. No nível exato da pergunta feita.
+- **Manchete.** Uma frase, no máximo duas. No nível exato da pergunta feita.
 - Se a pergunta foi sobre **um conjunto**, responda sobre o conjunto. **Não** liste os itens.
 - Se a pergunta foi sobre **um item**, responda sobre o item.
 - Sem subtítulos, sem listas, sem bullets, sem código.
@@ -33,8 +33,8 @@ A próxima mensagem do usuário pode ser:
 
 ## Exemplo
 
-**Errado** (10 PRs sobre fluxo de saque):
-> Esses 10 PRs migram o fluxo de saque do vakinha-web de um motor state-first para um motor URL-first. É uma stack encadeada... [400 palavras listando cada PR]
+**Errado** (pergunta sobre 10 PRs de um refactor):
+> Esses 10 PRs migram o módulo X do padrão A para o padrão B. É uma stack encadeada... [400 palavras listando cada PR]
 
 **Certo:**
-> Esses 10 PRs adicionam passos no fluxo de saque e mudam a experiência do usuário — a arquitetura continua a mesma.
+> Os 10 PRs adicionam passos no fluxo e mudam a experiência do usuário — a arquitetura continua a mesma.
