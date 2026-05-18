@@ -11,6 +11,13 @@ Aplica regras pessoais de limpeza no código alterado: remove comentários inlin
 **Use quando:**
 - Invocar explicitamente com `/polish`, "roda o polish", "passa o polish", "aplica o polish" ou "polir o código"
 
+### audit
+
+Irmã da `polish`, mas pra review: lê `./skills-config/audit-config` e reporta achados no código alterado em vez de aplicar fix. As regras moram no projeto, não na skill.
+
+**Use quando:**
+- Invocar explicitamente com `/audit`, "roda o audit", "passa o audit", "audita o código" ou "review o código"
+
 ### refactor-blueprint
 
 Co-piloto interativo para refactors graduais. Conduz descoberta mútua do código — do macro (contrato do sistema) para o micro (mudanças concretas em arquivos) — e produz um blueprint vivo em markdown que orienta a execução passo a passo.
@@ -76,6 +83,8 @@ Faz commit (opcional, se tiver coisa não-commitada), push e cria PR no GitHub. 
 onshot-skills/
 └── skills/
     ├── polish/
+    │   └── SKILL.md
+    ├── audit/
     │   └── SKILL.md
     ├── refactor-blueprint/
     │   ├── SKILL.md
