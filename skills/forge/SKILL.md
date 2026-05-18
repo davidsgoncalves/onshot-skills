@@ -1,6 +1,6 @@
 ---
 name: forge
-description: State machine de task em 3 fases — `init`, `plan`, `implement`. Cria a pasta da task, mantém o status, e implementa um plano a partir de qualquer input (texto livre, link, descrição, spec — o que o usuário fornecer via prompt/contexto). Não toca git, não chama outras skills. Use SOMENTE quando o usuário invocar explicitamente com "/forge init", "/forge plan", "/forge implement" ou variações que mencionem "forge". NÃO invocar automaticamente.
+description: State machine de task em 3 fases — `init`, `plan`, `implement`. Cria a pasta da task, mantém o status, opcionalmente cria branch no `init` (se `branch_pattern` configurado), e implementa um plano a partir de qualquer input (texto livre, link, descrição, spec — o que o usuário fornecer via prompt/contexto). Não comita, não abre PR, não chama outras skills. Use SOMENTE quando o usuário invocar explicitamente com "/forge init", "/forge plan", "/forge implement" ou variações que mencionem "forge". NÃO invocar automaticamente.
 ---
 
 # forge
@@ -38,7 +38,13 @@ Se `./skills-config/forge-config` não existe, criar o diretório se necessário
    ---
    ```
 
-5. Avisar onde criou.
+5. Criar branch (se `branch_pattern` do config não estiver vazio):
+   - Validar working tree limpo (`git status --porcelain`). Se sujo, abortar pedindo stash/commit — pasta e `status.md` já criados ficam, branch não.
+   - Resolver `base_branch`: usar o do config, ou detectar via `git symbolic-ref refs/remotes/origin/HEAD`.
+   - Se `sync_base: true`: `git fetch origin <base>` → `git checkout <base>` → `git pull --ff-only`.
+   - Montar nome aplicando `branch_pattern` (substituindo `<cod>` e gerando `<slug-kebab-do-input>` a partir do `input.md` quando o pattern pedir).
+   - `git checkout -b <nome>`. Se branch já existe, perguntar antes de reusar (`git checkout <nome>`) ou abortar.
+6. Avisar onde criou (pasta + branch, se houve).
 
 ## Fase 2 — plan
 
@@ -71,6 +77,6 @@ Se `./skills-config/forge-config` não existe, criar o diretório se necessário
 
 ## Guard-rails
 
-- Não toca git, não comita, não abre PR.
+- Não comita, não abre PR. Só cria branch no `init`, se `branch_pattern` estiver configurado.
 - State machine estrita: cada fase recusa fora da ordem.
 - Não chama outras skills.
