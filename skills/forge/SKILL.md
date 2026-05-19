@@ -15,10 +15,17 @@ Se `./skills-config/forge-config` não existe, criar o diretório se necessário
 
 ```
 <tasks_path>/{cod}/
-  ├── status.md    ← phase + timestamps
-  ├── input.md     ← prompt original (se houve input no init)
-  └── plan.md      ← escrito pelo plan
+  ├── status.md       ← phase + timestamps (gerenciado pelo forge)
+  ├── input.md        ← prompt original (se houve input no init)
+  ├── plan.md         ← escrito pelo plan
+  └── follow-ups.md   ← opcional: ações pós-merge declaradas por um caller (ex.: pipeline downstream). Forge reconhece o arquivo mas não dispara nem executa as ações.
 ```
+
+### `follow-ups.md` (opcional)
+
+Quando uma task tem ações condicionais a eventos externos (ex.: "depois que o PR X mergear, fazer Y em outro repo"), o caller que escreveu o `plan.md` pode gravar um `follow-ups.md` na mesma pasta. Forge não conhece a sintaxe interna — é texto livre pro consumo do caller ou de uma sessão futura.
+
+Convenção sugerida (não imposta): seções por `## Trigger: <evento>` com `Onde:` e `Ações:` numeradas. Quem **escreve** é o caller; quem **executa** é o usuário ou uma nova invocação que leia o arquivo.
 
 ## Fase 1 — init
 
