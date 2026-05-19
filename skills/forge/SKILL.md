@@ -18,14 +18,26 @@ Se `./skills-config/forge-config` não existe, criar o diretório se necessário
   ├── status.md       ← phase + timestamps (gerenciado pelo forge)
   ├── input.md        ← prompt original (se houve input no init)
   ├── plan.md         ← escrito pelo plan
-  └── follow-ups.md   ← opcional: ações pós-merge declaradas por um caller (ex.: pipeline downstream). Forge reconhece o arquivo mas não dispara nem executa as ações.
+  └── follow-ups.md   ← escrito pelo plan, quando houver ações condicionais a eventos externos (ex.: dependência de merge entre PRs). Forge grava, mas não dispara nem executa as ações.
 ```
 
-### `follow-ups.md` (opcional)
+### `follow-ups.md`
 
-Quando uma task tem ações condicionais a eventos externos (ex.: "depois que o PR X mergear, fazer Y em outro repo"), o caller que escreveu o `plan.md` pode gravar um `follow-ups.md` na mesma pasta. Forge não conhece a sintaxe interna — é texto livre pro consumo do caller ou de uma sessão futura.
+Quando o plan identifica ações condicionais a eventos externos (ex.: "depois que o PR de X mergear, fazer Y em outro repo"; ou "depois do deploy, validar Z"), gravar essa info em `follow-ups.md` na pasta da task. Mesma análise que produziu o plan — sem Q&A extra.
 
-Convenção sugerida (não imposta): seções por `## Trigger: <evento>` com `Onde:` e `Ações:` numeradas. Quem **escreve** é o caller; quem **executa** é o usuário ou uma nova invocação que leia o arquivo.
+Formato:
+
+```markdown
+# Follow-ups — <cod>
+
+## Trigger: <descrição do evento>
+- **Onde:** <repo / worktree / sistema onde a ação roda>
+- **Ações:**
+  1. <ação concreta>
+  2. <ação concreta>
+```
+
+Forge **grava** o arquivo no momento do plan; **não** executa as ações (isso fica pra humano ou nova invocação que leia o arquivo depois). Se o plano não tem dependências externas, o arquivo é omitido.
 
 ## Fase 1 — init
 
@@ -65,7 +77,8 @@ Convenção sugerida (não imposta): seções por `## Trigger: <evento>` com `On
    ```
 
    Conteúdo: resumo, abordagem, passos, riscos/decisões em aberto.
-5. Atualizar `status.md` → `phase: planned`.
+5. Se o plano identificou ações condicionais a eventos externos (dependência entre PRs, deploy → validação, schedule futuro, etc.), gravar `follow-ups.md` na mesma pasta. Formato na seção "Estrutura da pasta da task". Se não há dependência externa, omitir o arquivo.
+6. Atualizar `status.md` → `phase: planned`.
 
 ## Fase 3 — implement
 
