@@ -1,6 +1,6 @@
 ---
 name: plan-like-me
-description: Disciplina de planejamento orientada a reuso. Antes de propor qualquer estrutura nova (modelo, service, component, endpoint, worker, tabela), mapeia o que já existe no projeto que cobre algo próximo. Default é estender; criar novo exige justificativa explícita ou intenção declarada do usuário. Produz um "reuse map" anexo ao plano. Use junto com `/forge plan` ou quando o usuário invocar com "plan-like-me", "evita sistema paralelo", "reuso primeiro", "reusa o que existe", "não cria nada novo sem motivo", "extend don't duplicate", ou variações. NÃO se aplica a greenfield.
+description: Disciplina de planejamento orientada a reuso. Antes de propor qualquer estrutura nova (modelo, service, component, endpoint, worker, tabela) OU prescrever tooling (test framework, mocking lib, lint config, CI step), mapeia o que já existe no repo alvo. Default é estender/reusar; criar novo ou trocar tooling exige justificativa explícita ou intenção declarada do usuário. Produz um "reuse map" anexo ao plano cobrindo código e tooling. Use junto com `/forge plan` ou quando o usuário invocar com "plan-like-me", "evita sistema paralelo", "reuso primeiro", "reusa o que existe", "não cria nada novo sem motivo", "extend don't duplicate", ou variações. NÃO se aplica a greenfield.
 ---
 
 # plan-like-me
@@ -27,6 +27,21 @@ Pra cada conceito que vai aparecer no plano:
 - **Ler o arquivo encontrado inteiro** — entender o que aceita, o que devolve, o que extende, como é chamado.
 
 Sem busca explícita, sem proposta. Não confiar em "achei que era assim".
+
+### Inventariar o tooling do repo alvo
+
+Não é só código. Antes de propor onde testes, lint, build, deploy ou ferramentas adjacentes do plano vão morar, **verifique o setup real do repo**:
+
+- **Testes**: existe `spec/` (RSpec) ou `test/` (MiniTest)? Qual mocking lib (webmock/mocha/sinon)? Qual factory lib (FactoryBot/fabrication)? Caminho convencional pro tipo de coisa que vai testar?
+- **Lint / formatter**: existe `.rubocop.yml`/`.eslintrc`/`pyproject.toml`? Quais regras estão ativas?
+- **Build / CI**: o workflow do projeto (GitHub Actions, etc.) tem job de teste? Como ele invoca? Já roda contra o caminho que você quer usar?
+- **Migrations / config / fixtures**: convenção do projeto pra cada um.
+
+Se a spec (ou as Notas técnicas dela) **prescreveu** um caminho/framework/lib específico e o repo alvo **não tem**, isso é um gap: o plan precisa decidir entre adaptar à realidade do repo, ou negociar com o usuário pra adicionar a infra (com justificativa).
+
+Se a spec **omitiu** decisão de tooling pra uma peça que precisa, descubra do repo e registre no reuse map — não invente.
+
+**Regra de bolso:** "se a empresa decidir trocar a ferramenta X (RSpec, RuboCop, Sidekiq…) na semana que vem, o plano continua válido?". Se não → o plano está acoplado a uma decisão que precisa ser explicitada (REUSA tooling existente) ou negociada (NOVO tooling).
 
 ### Detectar sobreposição
 
@@ -77,6 +92,7 @@ Anexar ao `plan.md` (escrito pelo /forge plan) uma seção:
 | Envio de email | REUSA | `NotificationMailer#deliver` | Usa o método existente sem mudança. |
 | Worker de retry | NOVO | — | Padrão atual é síncrono. Usuário pediu fila explícita na spec (AC-003.2). |
 | Endpoint `POST /payments/retry` | ESTENDE | `PaymentsController` | Novo action no controller existente, mesmo namespace. |
+| Test infra dos cenários novos | REUSA | RSpec em `spec/models/`, mocking via `webmock` (Gemfile da api) | Spec assumiu RSpec — bate com o repo. Path do spec novo: `spec/models/payment_retry_spec.rb`. |
 ```
 
 Regras da tabela:

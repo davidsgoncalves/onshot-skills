@@ -14,8 +14,11 @@ Sinais de "implementação no ticket" que devem ser **movidos pra seção `## No
 | Pseudo-código embutido | `def método ... end`, `function nome() { ... }`, `class Foo { }` em prosa | Marcar como "candidato a sair pro plan" |
 | Nomes de classe/método específicos | `Moderation#moderate_image`, `UserService.create()` | OK como **referência** em contexto, NÃO OK como prescrição em REQ/AC |
 | Decisão de banco/storage | "tabela X", "coluna Y", "redis", "kafka" no corpo da spec | Marcar como vazamento → mover ou remover |
+| Prescrição de tooling de dev | Path de spec/teste, nome de framework de teste (RSpec, MiniTest, Jest, pytest), mocking lib (webmock, mocha, sinon), linter/formatter (RuboCop, ESLint, Prettier), build/deploy convention (workflow do GitHub Actions, comando de CI específico) | Marcar como "candidato a sair pro plan" → mover pra `## Notas técnicas`. Razão: tooling é decisão do repo alvo, não do produto. Plan-like-me valida a prescrição contra a realidade do repo. |
 
 **Regra de ouro:** se o sinal está descrevendo o **estado atual** do sistema, OK. Se está prescrevendo **como fazer**, vai pro plan.
+
+**Regra de bolso pra tooling:** se a empresa decidir trocar a ferramenta na semana que vem (ex.: RSpec → MiniTest, RuboCop → StandardRB, Sidekiq → Solid Queue), a spec continua válida? Se não → é HOW, vai pra Notas técnicas.
 
 ## 2. Detecção de gaps (WHAT que falta)
 
