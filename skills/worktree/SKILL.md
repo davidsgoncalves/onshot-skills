@@ -1,6 +1,6 @@
 ---
 name: worktree
-description: Cria um git worktree em `<repo>/.worktrees/<branch-leaf>` e copia os arquivos de env ignorados (`.env*`, `.envrc`, `.tool-versions`) do repo principal pro worktree, pra que o ambiente fique funcional fora da caixa. Use quando o usuário pedir explicitamente um worktree, ou quando um pipeline (ex.: gsd) precisar de branch+worktree atomicamente pra isolar uma task. Não toca remote, não instala dependências, não roda comandos do projeto.
+description: Cria um git worktree em `<repo>/.worktrees/<branch-leaf>` e copia os arquivos de env ignorados (`.env*`, `.envrc`, `.tool-versions`) do repo principal pro worktree, pra que o ambiente fique funcional fora da caixa. Use quando o usuário pedir explicitamente um worktree, ou quando um pipeline downstream (como o gsd) precisar de branch e worktree atomicamente pra isolar uma task. Não toca remote, não instala dependências, não roda comandos do projeto.
 ---
 
 # Worktree com envs
